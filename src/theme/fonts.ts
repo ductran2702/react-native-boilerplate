@@ -9,11 +9,13 @@ export const fonts = {
     bold: 'openSans_bold',
     boldItalic: 'openSans_bold_italic',
   },
+  FcSubjectRounded: 'FcSubjectRounded',
 };
 
 // preload fonts
 export const loadFonts = () =>
   loadAsync({
+    FcSubjectRounded: require('@assets/fonts/FC Subject Rounded Regular.ttf'),
     openSans_regular: require('@assets/fonts/OpenSans-Regular.ttf'),
     openSans_regular_italic: require('@assets/fonts/OpenSans-Italic.ttf'),
     openSans_semiBold: require('@assets/fonts/OpenSans-Semibold.ttf'),

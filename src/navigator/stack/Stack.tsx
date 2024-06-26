@@ -9,12 +9,15 @@ import { colors } from '@theme';
 import Home from '@views/Home';
 import Details from '@views/Details';
 import Profile from '@views/Profile';
+import Card from '@views/Card';
+import { StackHeaderAdd } from './components/StackHeaderAdd';
+import { StackHeaderBack } from './components/StackHeaderBack';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
 const navigationProps = {
-  headerTintColor: colors.white,
-  headerStyle: { backgroundColor: colors.darkPurple },
+  headerTintColor: colors.darkPurple,
+  headerStyle: { backgroundColor: colors.white },
   headerTitleStyle: { fontSize: 18 },
 };
 
@@ -51,18 +54,24 @@ export function ProfileStackNavigator({ navigation }: DrawerProps) {
         component={Profile}
         name="ProfileStack"
         options={{
-          title: 'Profile',
+          title: 'Card',
           headerTitle: () => <StackHeaderTitle />,
           headerLeft: () => <StackHeaderLeft onPress={() => navigation.toggleDrawer()} />,
           headerTitleAlign: 'center',
         }}
       />
       <Stack.Screen
-        component={Details}
-        name="DetailsStack"
+        component={Card}
+        name="CardStack"
         options={{
-          title: 'Details',
+          title: 'Card list',
           headerTitle: () => <StackHeaderTitle />,
+          headerLeft: () => (
+            <StackHeaderBack
+              onPress={() => navigation.navigate('ProfileStack', { from: 'Card list' })}
+            />
+          ),
+          headerRight: () => <StackHeaderAdd onPress={() => navigation.goBack()} />,
           headerTitleAlign: 'center',
         }}
       />

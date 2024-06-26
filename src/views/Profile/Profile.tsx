@@ -35,13 +35,13 @@ export default function Profile({ navigation }: StackProps) {
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
-      <Text style={styles.title}>Profile</Text>
+      <Text style={styles.title}>Card</Text>
       <Button
-        title="Go to Details"
+        title="Go to Card list"
         titleStyle={styles.buttonTitle}
         style={styles.button}
         onPress={() => {
-          navigation.navigate('DetailsStack', { from: 'Profile' });
+          navigation.navigate('CardStack', { from: 'Profile' });
         }}
       />
     </View>

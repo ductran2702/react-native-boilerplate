@@ -29,11 +29,7 @@ export default function TabNavigator() {
         tabBarActiveBackgroundColor: colors.white,
       })}>
       <Tab.Screen name="HomeTab" component={HomeStackNavigator} options={{ title: 'Home' }} />
-      <Tab.Screen
-        name="ProfileTab"
-        component={ProfileStackNavigator}
-        options={{ title: 'Profile' }}
-      />
+      <Tab.Screen name="ProfileTab" component={ProfileStackNavigator} options={{ title: 'Card' }} />
     </Tab.Navigator>
   );
 }
