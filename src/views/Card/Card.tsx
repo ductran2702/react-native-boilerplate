@@ -1,6 +1,7 @@
+import { StackProps } from '@navigator';
 import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
 
-export default function Card() {
+export default function Card({ navigation }: StackProps) {
   return (
     <View style={styles.containerView}>
       <View style={styles.centerView}>
@@ -20,7 +21,7 @@ export default function Card() {
           }}>
           for easy payment
         </Text>
-        <TouchableOpacity onPress={() => console.log('hello')}>
+        <TouchableOpacity onPress={() => navigation.navigate('AddCardStack', { from: 'Profile' })}>
           <Text
             style={{
               ...styles.text,

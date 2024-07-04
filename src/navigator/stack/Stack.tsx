@@ -12,6 +12,7 @@ import Profile from '@views/Profile';
 import Card from '@views/Card';
 import { StackHeaderAdd } from './components/StackHeaderAdd';
 import { StackHeaderBack } from './components/StackHeaderBack';
+import AddCard from '@views/AddCard';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -71,7 +72,25 @@ export function ProfileStackNavigator({ navigation }: DrawerProps) {
               onPress={() => navigation.navigate('ProfileStack', { from: 'Card list' })}
             />
           ),
-          headerRight: () => <StackHeaderAdd onPress={() => navigation.goBack()} />,
+          headerRight: () => (
+            <StackHeaderAdd
+              onPress={() => navigation.navigate('AddCardStack', { from: 'Card list' })}
+            />
+          ),
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        component={AddCard}
+        name="AddCardStack"
+        options={{
+          title: 'Add Card',
+          headerTitle: () => <StackHeaderTitle />,
+          headerLeft: () => (
+            <StackHeaderBack
+              onPress={() => navigation.navigate('CardStack', { from: 'Add Card' })}
+            />
+          ),
           headerTitleAlign: 'center',
         }}
       />

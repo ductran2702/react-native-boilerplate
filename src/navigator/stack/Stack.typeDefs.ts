@@ -5,6 +5,7 @@ export type StackParamList = {
   DetailsStack: { from: string };
   ProfileStack: undefined;
   CardStack: { from: string };
+  AddCardStack: { from: string };
   // add more screen props...
 };
 
