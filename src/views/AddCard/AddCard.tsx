@@ -1,9 +1,14 @@
 import Button from '@components/Button';
+import { useTokenSlice } from '@modules/token/token.slice';
 import { StackProps } from '@navigator';
 import { colors } from '@theme';
+import React, { useState } from 'react';
 import { StyleSheet, Image, Text, View, TextInput } from 'react-native';
 
 export default function AddCard({ navigation }: StackProps) {
+  const [cardObject, setCardObject] = useState<any>({});
+  const { dispatch, addTokenToList } = useTokenSlice();
+
   return (
     <View
       style={{
@@ -39,6 +44,8 @@ export default function AddCard({ navigation }: StackProps) {
             marginRight: 25,
           }}
           placeholder="0000 0000 0000 0000"
+          value={cardObject.number}
+          onChangeText={text => setCardObject({ ...cardObject, number: text })}
         />
         <Image
           source={{ uri: 'https://i.imgur.com/1tMFzp8.png' }}
@@ -91,6 +98,8 @@ export default function AddCard({ navigation }: StackProps) {
             marginRight: 25,
           }}
           placeholder="Ty Lee"
+          onChangeText={text => setCardObject({ ...cardObject, name: text })}
+          value={cardObject.name}
         />
       </View>
       <View
@@ -139,6 +148,8 @@ export default function AddCard({ navigation }: StackProps) {
               marginRight: 25,
             }}
             placeholder="Expiry date"
+            onChangeText={text => setCardObject({ ...cardObject, expiry: text })}
+            value={cardObject.expiry}
           />
         </View>
         <View
@@ -157,6 +168,8 @@ export default function AddCard({ navigation }: StackProps) {
               marginRight: 25,
             }}
             placeholder="CVV"
+            onChangeText={text => setCardObject({ ...cardObject, security_code: text })}
+            value={cardObject.security_code}
           />
         </View>
       </View>
@@ -196,7 +209,29 @@ export default function AddCard({ navigation }: StackProps) {
           title="Add card"
           titleStyle={{ color: 'white', fontWeight: 400, fontSize: 18 }}
           onPress={() => {
-            navigation.navigate('CardStack', { from: 'Profile' });
+            const expiration_month = cardObject.expiry.slice(0, 2);
+            const expiration_year = cardObject.expiry.slice(3, 5);
+            fetch('http://localhost:3002/create-token', {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                ...cardObject,
+                expiration_month,
+                expiration_year,
+              }),
+            })
+              .then(res => res.json())
+              .then(res => {
+                dispatch(addTokenToList(res.tokenInfo.id, dispatch));
+                console.log(res);
+                navigation.navigate('CardStack', { from: 'AddCardStack' });
+              })
+              .catch(err => {
+                console.log(err);
+              });
           }}
           style={styles.button}
         />
